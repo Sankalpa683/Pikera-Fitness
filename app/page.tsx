@@ -35,13 +35,13 @@ const foodImages: Record<string, string> = {
   "Kukhura Ko Masu (Chicken Curry)":
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdQHf8sBGWRelHkzWcIXVbAUp3nTyD922yzA&s",
   "Machha (Fish Curry)": "https://vismaifood.com/storage/app/uploads/public/daa/96d/7bc/thumb__1200_0_0_0_auto.jpg",
-  "Momo (Chicken)": "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=400&h=300&fit=crop",
+  "Momo (Chicken)": "https://images.unsplash.com/photo-1496116218417-1a781b1c4167?w=400&h=300&fit=crop",
   "Momo (Vegetable)": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=300&fit=crop",
-  "Momo (Buff)": "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=400&h=300&fit=crop",
+  "Momo (Buff)": "https://images.unsplash.com/photo-1496116218417-1a781b1c4167?w=400&h=300&fit=crop",
   "Kothey Momo": "https://img-global.cpcdn.com/recipes/d9ed901923d39a2f/400x400cq90/photo.jpg",
   "Thukpa (Chicken)": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop",
   "Thukpa (Vegetable)":
-    "https://junifoods.com/wp-content/uploads/2024/05/The-Best-Chicken-Thukpa-Tibetan-Noodle-Soup-%E0%A4%95%E0%A5%81%E0%A4%96%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%95%E0%A5%8B-%E0%A4%A5%E0%A5%81%E0%A4%95%E0%A5%8D%E0%A4%AA%E0%A4%BE--500x500.jpg",
+    "https://junifoods.com/wp-content/uploads/2024/05/The-Best-Chicken-Thukpa-Tibetan-Noodle-Soup-%E0%A4%95%E0%A5%81%E0%A4%96%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%95%E0%A5%8B-%E0%A4%A5%E0%A5%81%E0%A4%95%E0%A4%AA%E0%A4%BE--500x500.jpg",
   "Saag (Spinach Curry)":
     "https://www.foodandwine.com/thmb/NHhV6IzdPVDXYRRtZDhqe50R_SI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/HD-201306-r-sauteed-spring-greens-with-bacon-and-mustard-seeds-e12c5524a80249d59360e48c29e250b7.jpg",
   "Iskus (Chayote)": "https://t4.ftcdn.net/jpg/01/62/53/13/360_F_162531327_JQ6S1oHh25OfP5lizb6QP6v2o6unvSQ4.jpg",
@@ -840,32 +840,155 @@ export default function HomePage() {
   )
 }
 
-// Placeholder components
+// Updated placeholder components with full navigation and responsive design
 function HomeView({
   onViewChange,
   totalFoods,
 }: { onViewChange: (view: "home" | "log" | "search" | "settings") => void; totalFoods: number }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-[#131712] flex" style={{ fontFamily: 'Manrope, "Noto Sans", sans-serif' }}>
+      {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar currentView="home" onViewChange={onViewChange} />
       </div>
-      <div className="flex-1 flex items-center justify-center p-4 lg:p-8">
-        <div className="text-center max-w-md lg:max-w-2xl">
-          <h1 className="text-white text-2xl lg:text-4xl font-bold mb-4 lg:mb-6">Nepali Nutrition Database</h1>
-          <p className="text-[#a5b6a0] text-base lg:text-lg mb-4">
-            Comprehensive macronutrient data for traditional Nepali foods
-          </p>
-          <div className="bg-[#2d372a] rounded-xl p-6 mb-8">
-            <div className="text-3xl lg:text-4xl font-bold text-[#4a5c47] mb-2">{totalFoods}</div>
-            <div className="text-[#a5b6a0]">Nepali Foods with Accurate Macros</div>
+
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex">
+          <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
+          <div className="relative">
+            <Sidebar currentView="home" onViewChange={onViewChange} onClose={() => setSidebarOpen(false)} />
           </div>
-          <button
-            onClick={() => onViewChange("search")}
-            className="bg-[#4a5c47] hover:bg-[#5a6c57] text-white px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-medium text-base lg:text-lg transition-colors"
-          >
-            Explore Food Database
-          </button>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Header */}
+        <div className="bg-[#131712] border-b border-[#2d372a] sticky top-0 z-40">
+          <div className="flex items-center justify-between p-4 lg:px-6">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden text-white p-2 hover:bg-[#2d372a] rounded-lg transition-colors"
+            >
+              <Menu size={24} />
+            </button>
+
+            <div className="flex-1 text-center lg:text-left lg:ml-4">
+              <h2 className="text-white text-lg lg:text-xl font-bold">Dashboard</h2>
+              <p className="text-[#a5b6a0] text-sm">Welcome to Pikera Fitness</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Dashboard Content */}
+        <div className="flex-1 p-4 lg:p-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
+              <div className="bg-[#2d372a] rounded-xl p-6">
+                <div className="text-3xl lg:text-4xl font-bold text-[#4a5c47] mb-2">{totalFoods}</div>
+                <div className="text-[#a5b6a0] text-sm lg:text-base">Total Foods</div>
+              </div>
+              <div className="bg-[#2d372a] rounded-xl p-6">
+                <div className="text-3xl lg:text-4xl font-bold text-[#4a5c47] mb-2">12</div>
+                <div className="text-[#a5b6a0] text-sm lg:text-base">Categories</div>
+              </div>
+              <div className="bg-[#2d372a] rounded-xl p-6">
+                <div className="text-3xl lg:text-4xl font-bold text-[#4a5c47] mb-2">0</div>
+                <div className="text-[#a5b6a0] text-sm lg:text-base">Foods Logged Today</div>
+              </div>
+              <div className="bg-[#2d372a] rounded-xl p-6">
+                <div className="text-3xl lg:text-4xl font-bold text-[#4a5c47] mb-2">0</div>
+                <div className="text-[#a5b6a0] text-sm lg:text-base">Favorites</div>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-8">
+              <button
+                onClick={() => onViewChange("search")}
+                className="bg-[#4a5c47] hover:bg-[#5a6c57] text-white p-6 rounded-xl text-left transition-colors"
+              >
+                <MagnifyingGlass className="w-8 h-8 mb-3" />
+                <h3 className="text-lg font-semibold mb-2">Search Foods</h3>
+                <p className="text-sm opacity-90">Find nutrition info for Nepali foods</p>
+              </button>
+              <button
+                onClick={() => onViewChange("log")}
+                className="bg-[#2d372a] hover:bg-[#3d473a] text-white p-6 rounded-xl text-left transition-colors"
+              >
+                <PlusSquare className="w-8 h-8 mb-3" />
+                <h3 className="text-lg font-semibold mb-2">Log Food</h3>
+                <p className="text-sm opacity-90">Track your daily nutrition</p>
+              </button>
+              <button
+                onClick={() => onViewChange("settings")}
+                className="bg-[#2d372a] hover:bg-[#3d473a] text-white p-6 rounded-xl text-left transition-colors"
+              >
+                <Settings className="w-8 h-8 mb-3" />
+                <h3 className="text-lg font-semibold mb-2">Settings</h3>
+                <p className="text-sm opacity-90">Customize your experience</p>
+              </button>
+            </div>
+
+            {/* Welcome Section */}
+            <div className="bg-[#2d372a] rounded-xl p-6 lg:p-8">
+              <h2 className="text-white text-xl lg:text-2xl font-bold mb-4">Welcome to Pikera Fitness Nutrition</h2>
+              <p className="text-[#a5b6a0] text-base lg:text-lg mb-6">
+                Your comprehensive guide to traditional Nepali food nutrition. Track macros, discover new foods, and
+                maintain a healthy lifestyle with authentic Nepali cuisine.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-[#1f251d] rounded-lg p-4">
+                  <h3 className="text-white font-semibold mb-2">🥘 Traditional Foods</h3>
+                  <p className="text-[#a5b6a0] text-sm">Dal Bhat, Gundruk, Sel Roti and more</p>
+                </div>
+                <div className="bg-[#1f251d] rounded-lg p-4">
+                  <h3 className="text-white font-semibold mb-2">📊 Accurate Macros</h3>
+                  <p className="text-[#a5b6a0] text-sm">Protein, carbs, fats, and calories</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Bottom Navigation */}
+        <div className="lg:hidden">
+          <div className="flex border-t border-[#2d372a] bg-[#1f251d] px-4 py-2">
+            <button
+              onClick={() => onViewChange("home")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-white"
+            >
+              <Home size={24} />
+              <span className="text-xs font-medium">Home</span>
+            </button>
+            <button
+              onClick={() => onViewChange("log")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-[#a5b6a0]"
+            >
+              <PlusSquare size={24} />
+              <span className="text-xs font-medium">Log</span>
+            </button>
+            <button
+              onClick={() => onViewChange("search")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-[#a5b6a0]"
+            >
+              <MagnifyingGlass size={24} />
+              <span className="text-xs font-medium">Search</span>
+            </button>
+            <button
+              onClick={() => onViewChange("settings")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-[#a5b6a0]"
+            >
+              <Settings size={24} />
+              <span className="text-xs font-medium">Settings</span>
+            </button>
+          </div>
+          <div className="h-safe-area-inset-bottom bg-[#1f251d]"></div>
         </div>
       </div>
     </div>
@@ -876,21 +999,146 @@ function LogView({
   onViewChange,
   onShowAddForm,
 }: { onViewChange: (view: "home" | "log" | "search" | "settings") => void; onShowAddForm: () => void }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0])
+
   return (
     <div className="min-h-screen bg-[#131712] flex" style={{ fontFamily: 'Manrope, "Noto Sans", sans-serif' }}>
+      {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar currentView="log" onViewChange={onViewChange} />
       </div>
-      <div className="flex-1 flex items-center justify-center p-4 lg:p-8">
-        <div className="text-center max-w-md lg:max-w-2xl">
-          <h1 className="text-white text-2xl lg:text-4xl font-bold mb-4 lg:mb-6">Food Log</h1>
-          <p className="text-[#a5b6a0] text-base lg:text-lg mb-8 lg:mb-12">Track your daily nutrition intake</p>
-          <button
-            onClick={onShowAddForm}
-            className="bg-[#4a5c47] hover:bg-[#5a6c57] text-white px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-medium text-base lg:text-lg transition-colors"
-          >
-            Add New Food
-          </button>
+
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex">
+          <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
+          <div className="relative">
+            <Sidebar currentView="log" onViewChange={onViewChange} onClose={() => setSidebarOpen(false)} />
+          </div>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Header */}
+        <div className="bg-[#131712] border-b border-[#2d372a] sticky top-0 z-40">
+          <div className="flex items-center justify-between p-4 lg:px-6">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden text-white p-2 hover:bg-[#2d372a] rounded-lg transition-colors"
+            >
+              <Menu size={24} />
+            </button>
+
+            <div className="flex-1 text-center lg:text-left lg:ml-4">
+              <h2 className="text-white text-lg lg:text-xl font-bold">Food Log</h2>
+              <p className="text-[#a5b6a0] text-sm">Track your daily nutrition</p>
+            </div>
+
+            {/* Add Food Button - Desktop */}
+            <button
+              onClick={onShowAddForm}
+              className="hidden lg:flex items-center gap-2 bg-[#4a5c47] hover:bg-[#5a6c57] text-white px-4 py-2 rounded-lg transition-colors"
+            >
+              <PlusSquare size={20} />
+              Add Food
+            </button>
+          </div>
+
+          {/* Date Selector */}
+          <div className="px-4 lg:px-6 pb-4">
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="bg-[#2d372a] text-white border border-[#3d473a] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#4a5c47]"
+            />
+          </div>
+        </div>
+
+        {/* Log Content */}
+        <div className="flex-1 p-4 lg:p-8">
+          <div className="max-w-4xl mx-auto">
+            {/* Daily Summary */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              <div className="bg-[#2d372a] rounded-xl p-4 lg:p-6">
+                <div className="text-2xl lg:text-3xl font-bold text-[#4a5c47] mb-1">0</div>
+                <div className="text-[#a5b6a0] text-sm">Calories</div>
+              </div>
+              <div className="bg-[#2d372a] rounded-xl p-4 lg:p-6">
+                <div className="text-2xl lg:text-3xl font-bold text-[#4a5c47] mb-1">0g</div>
+                <div className="text-[#a5b6a0] text-sm">Protein</div>
+              </div>
+              <div className="bg-[#2d372a] rounded-xl p-4 lg:p-6">
+                <div className="text-2xl lg:text-3xl font-bold text-[#4a5c47] mb-1">0g</div>
+                <div className="text-[#a5b6a0] text-sm">Carbs</div>
+              </div>
+              <div className="bg-[#2d372a] rounded-xl p-4 lg:p-6">
+                <div className="text-2xl lg:text-3xl font-bold text-[#4a5c47] mb-1">0g</div>
+                <div className="text-[#a5b6a0] text-sm">Fats</div>
+              </div>
+            </div>
+
+            {/* Meals Section */}
+            <div className="space-y-6">
+              {["Breakfast", "Lunch", "Dinner", "Snacks"].map((meal) => (
+                <div key={meal} className="bg-[#2d372a] rounded-xl p-4 lg:p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-white text-lg font-semibold">{meal}</h3>
+                    <button onClick={onShowAddForm} className="text-[#4a5c47] hover:text-[#5a6c57] transition-colors">
+                      <PlusSquare size={20} />
+                    </button>
+                  </div>
+                  <div className="text-center py-8">
+                    <div className="text-[#a5b6a0] mb-4">No foods logged for {meal.toLowerCase()}</div>
+                    <button
+                      onClick={onShowAddForm}
+                      className="bg-[#4a5c47] hover:bg-[#5a6c57] text-white px-4 py-2 rounded-lg transition-colors text-sm"
+                    >
+                      Add Food
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Bottom Navigation */}
+        <div className="lg:hidden">
+          <div className="flex border-t border-[#2d372a] bg-[#1f251d] px-4 py-2">
+            <button
+              onClick={() => onViewChange("home")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-[#a5b6a0]"
+            >
+              <Home size={24} />
+              <span className="text-xs font-medium">Home</span>
+            </button>
+            <button
+              onClick={() => onViewChange("log")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-white"
+            >
+              <PlusSquare size={24} />
+              <span className="text-xs font-medium">Log</span>
+            </button>
+            <button
+              onClick={() => onViewChange("search")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-[#a5b6a0]"
+            >
+              <MagnifyingGlass size={24} />
+              <span className="text-xs font-medium">Search</span>
+            </button>
+            <button
+              onClick={() => onViewChange("settings")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-[#a5b6a0]"
+            >
+              <Settings size={24} />
+              <span className="text-xs font-medium">Settings</span>
+            </button>
+          </div>
+          <div className="h-safe-area-inset-bottom bg-[#1f251d]"></div>
         </div>
       </div>
     </div>
@@ -898,17 +1146,201 @@ function LogView({
 }
 
 function SettingsView({ onViewChange }: { onViewChange: (view: "home" | "log" | "search" | "settings") => void }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { user, signOut } = useAuth()
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+    } catch (error) {
+      console.error("Error signing out:", error)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#131712] flex" style={{ fontFamily: 'Manrope, "Noto Sans", sans-serif' }}>
+      {/* Desktop Sidebar */}
       <div className="hidden lg:block">
         <Sidebar currentView="settings" onViewChange={onViewChange} />
       </div>
-      <div className="flex-1 flex items-center justify-center p-4 lg:p-8">
-        <div className="text-center max-w-md lg:max-w-2xl">
-          <h1 className="text-white text-2xl lg:text-4xl font-bold mb-4 lg:mb-6">Settings</h1>
-          <p className="text-[#a5b6a0] text-base lg:text-lg mb-8 lg:mb-12">
-            Customize your nutrition tracking experience
-          </p>
+
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex">
+          <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
+          <div className="relative">
+            <Sidebar currentView="settings" onViewChange={onViewChange} onClose={() => setSidebarOpen(false)} />
+          </div>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Header */}
+        <div className="bg-[#131712] border-b border-[#2d372a] sticky top-0 z-40">
+          <div className="flex items-center justify-between p-4 lg:px-6">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden text-white p-2 hover:bg-[#2d372a] rounded-lg transition-colors"
+            >
+              <Menu size={24} />
+            </button>
+
+            <div className="flex-1 text-center lg:text-left lg:ml-4">
+              <h2 className="text-white text-lg lg:text-xl font-bold">Settings</h2>
+              <p className="text-[#a5b6a0] text-sm">Customize your experience</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Settings Content */}
+        <div className="flex-1 p-4 lg:p-8">
+          <div className="max-w-2xl mx-auto space-y-6">
+            {/* Profile Section */}
+            {user && (
+              <div className="bg-[#2d372a] rounded-xl p-4 lg:p-6">
+                <h3 className="text-white text-lg font-semibold mb-4">Profile</h3>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-16 h-16 bg-[#4a5c47] rounded-full flex items-center justify-center">
+                    {user.user_metadata?.avatar_url ? (
+                      <img
+                        src={user.user_metadata.avatar_url || "/placeholder.svg"}
+                        alt="Profile"
+                        className="w-16 h-16 rounded-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-white text-xl font-bold">
+                        {user.user_metadata?.full_name?.[0] || user.email?.[0]?.toUpperCase()}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <div className="text-white font-medium">{user.user_metadata?.full_name || "User"}</div>
+                    <div className="text-[#a5b6a0] text-sm">{user.email}</div>
+                  </div>
+                </div>
+                <button
+                  onClick={handleSignOut}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
+                >
+                  Sign Out
+                </button>
+              </div>
+            )}
+
+            {/* App Preferences */}
+            <div className="bg-[#2d372a] rounded-xl p-4 lg:p-6">
+              <h3 className="text-white text-lg font-semibold mb-4">Preferences</h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-white font-medium">Dark Mode</div>
+                    <div className="text-[#a5b6a0] text-sm">Currently enabled</div>
+                  </div>
+                  <div className="w-12 h-6 bg-[#4a5c47] rounded-full relative">
+                    <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5"></div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-white font-medium">Notifications</div>
+                    <div className="text-[#a5b6a0] text-sm">Get reminders to log meals</div>
+                  </div>
+                  <div className="w-12 h-6 bg-[#1f251d] rounded-full relative">
+                    <div className="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Nutrition Goals */}
+            <div className="bg-[#2d372a] rounded-xl p-4 lg:p-6">
+              <h3 className="text-white text-lg font-semibold mb-4">Nutrition Goals</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[#a5b6a0] text-sm">Daily Calories</label>
+                  <input
+                    type="number"
+                    placeholder="2000"
+                    className="w-full bg-[#1f251d] text-white border border-[#3d473a] rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#4a5c47]"
+                  />
+                </div>
+                <div>
+                  <label className="text-[#a5b6a0] text-sm">Protein (g)</label>
+                  <input
+                    type="number"
+                    placeholder="150"
+                    className="w-full bg-[#1f251d] text-white border border-[#3d473a] rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#4a5c47]"
+                  />
+                </div>
+                <div>
+                  <label className="text-[#a5b6a0] text-sm">Carbs (g)</label>
+                  <input
+                    type="number"
+                    placeholder="250"
+                    className="w-full bg-[#1f251d] text-white border border-[#3d473a] rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#4a5c47]"
+                  />
+                </div>
+                <div>
+                  <label className="text-[#a5b6a0] text-sm">Fats (g)</label>
+                  <input
+                    type="number"
+                    placeholder="67"
+                    className="w-full bg-[#1f251d] text-white border border-[#3d473a] rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#4a5c47]"
+                  />
+                </div>
+              </div>
+              <button className="w-full bg-[#4a5c47] hover:bg-[#5a6c57] text-white px-4 py-2 rounded-lg transition-colors mt-4">
+                Save Goals
+              </button>
+            </div>
+
+            {/* About */}
+            <div className="bg-[#2d372a] rounded-xl p-4 lg:p-6">
+              <h3 className="text-white text-lg font-semibold mb-4">About</h3>
+              <div className="text-[#a5b6a0] space-y-2">
+                <div>Version 1.0.0</div>
+                <div>Made for Nepali fitness creators</div>
+                <div>© 2024 Pikera Fitness</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Bottom Navigation */}
+        <div className="lg:hidden">
+          <div className="flex border-t border-[#2d372a] bg-[#1f251d] px-4 py-2">
+            <button
+              onClick={() => onViewChange("home")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-[#a5b6a0]"
+            >
+              <Home size={24} />
+              <span className="text-xs font-medium">Home</span>
+            </button>
+            <button
+              onClick={() => onViewChange("log")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-[#a5b6a0]"
+            >
+              <PlusSquare size={24} />
+              <span className="text-xs font-medium">Log</span>
+            </button>
+            <button
+              onClick={() => onViewChange("search")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-[#a5b6a0]"
+            >
+              <MagnifyingGlass size={24} />
+              <span className="text-xs font-medium">Search</span>
+            </button>
+            <button
+              onClick={() => onViewChange("settings")}
+              className="flex flex-1 flex-col items-center gap-1 py-2 text-white"
+            >
+              <Settings size={24} />
+              <span className="text-xs font-medium">Settings</span>
+            </button>
+          </div>
+          <div className="h-safe-area-inset-bottom bg-[#1f251d]"></div>
         </div>
       </div>
     </div>
