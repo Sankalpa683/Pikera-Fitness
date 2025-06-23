@@ -53,6 +53,7 @@ export const metadata: Metadata = {
     site: "@pikera_fitness",
     images: ["https://fitness.pikeraai.com/nepali-food-macros.png"],
   },
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({
