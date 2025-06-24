@@ -27,6 +27,9 @@ export interface Food {
 // Food image mapping for relevant images
 const foodImages: Record<string, string> = {
   "Dal Bhat (Lentil Rice)": "https://www.cookwithnabeela.com/wp-content/uploads/2024/05/DalChawal.webp",
+  "Oats": "https://images.immediate.co.uk/production/volatile/sites/30/2023/08/Porridge-oats-d09fae8.jpg?quality=90&resize=440,400",
+  "Boiled Egg": "https://dieteticdirections.com/wp-content/uploads/2021/04/eggs-hard-735x735.jpeg",
+  "Omelette": "https://www.healthyfood.com/wp-content/uploads/2018/02/Basic-omelette.jpg",
   "Gundruk (Fermented Greens)": "https://healthytraditionalfood.wordpress.com/wp-content/uploads/2020/09/img_5767.jpg",
   "Sel Roti": "https://washburnreview.org/wp-content/uploads/2023/03/sel-roti.jpeg",
   "Buff Sukuti (Dried Buffalo)": "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=400&h=300&fit=crop",
