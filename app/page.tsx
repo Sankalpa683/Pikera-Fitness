@@ -32,6 +32,7 @@ const foodImages: Record<string, string> = {
   "Omelette (2 large eggs, minimal oil)": "https://www.healthyfood.com/wp-content/uploads/2018/02/Basic-omelette.jpg",
   "Gundruk (Fermented Greens)": "https://healthytraditionalfood.wordpress.com/wp-content/uploads/2020/09/img_5767.jpg",
   "Sel Roti": "https://washburnreview.org/wp-content/uploads/2023/03/sel-roti.jpeg",
+  "Roti (Whole Wheat)": "https://sybaritica.me/wp-content/uploads/2020/04/A-Simple-Roti-Recipe-1.jpg",
   "Buff Sukuti (Dried Buffalo)": "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=400&h=300&fit=crop",
   "Khasi Ko Masu (Goat Curry)":
     "https://junifoods.com/wp-content/uploads/2023/03/Goat-Meat-Curry-Khasi-Ko-Masu-%E0%A4%96%E0%A4%B8%E0%A5%80%E0%A4%95%E0%A5%8B-%E0%A4%AE%E0%A4%BE%E0%A4%B8%E0%A5%81.jpg",
@@ -149,6 +150,17 @@ const nepaliNutritionDatabase: Omit<Food, "id" | "image">[] = [
     tags: ["Veg", "Traditional", "Sweet"],
     category: "Snacks",
   },
+  {
+  name: "Roti (Whole Wheat)",
+  description: "Medium whole‑wheat flatbread made from atta flour",
+  servingSize: "1 medium (50 g)",
+  calories: 132,
+  protein: 4.8,
+  carbs: 27.9,
+  fats: 0.65,
+  tags: ["Grain", "Whole‑grain", "Fiber‑rich"],
+  category: "Grains",
+},
 
   // Meat and Protein Sources
   {
